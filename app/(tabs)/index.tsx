@@ -16,6 +16,16 @@ import {
   student,
 } from '../../data/pantherHubData';
 
+const COLORS = {
+  brown: '#4F2C1D',
+  gold: '#FFB500',
+  background: '#FFF9EE',
+  card: '#FFFFFF',
+  text: '#251A15',
+  muted: '#74665F',
+  lightGold: '#FFF0C2',
+};
+
 function getGreeting() {
   const hour = new Date().getHours();
 
@@ -45,7 +55,7 @@ export default function HomeScreen() {
     currency: 'USD',
   });
 
-  const openNextClass = () => {
+  function openNextClass() {
     if (!nextClass) {
       Alert.alert('PantherHub', 'No classes were found.');
       return;
@@ -57,7 +67,7 @@ export default function HomeScreen() {
         id: nextClass.id,
       },
     });
-  };
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -90,18 +100,26 @@ export default function HomeScreen() {
       {nextClass ? (
         <View style={styles.largeCard}>
           <View style={styles.cardTopRow}>
-            <View>
+            <View style={styles.cardTitleArea}>
               <Text style={styles.cardLabel}>{nextClass.code}</Text>
               <Text style={styles.cardTitle}>{nextClass.name}</Text>
             </View>
 
             <View style={styles.iconContainer}>
-              <Ionicons name="school-outline" size={24} color="#4B2E83" />
+              <Ionicons
+                name="school-outline"
+                size={24}
+                color={COLORS.brown}
+              />
             </View>
           </View>
 
           <View style={styles.detailRow}>
-            <Ionicons name="time-outline" size={19} color="#666666" />
+            <Ionicons
+              name="time-outline"
+              size={19}
+              color={COLORS.muted}
+            />
 
             <Text style={styles.detailText}>
               {nextClass.days} • {nextClass.startTime}
@@ -109,9 +127,15 @@ export default function HomeScreen() {
           </View>
 
           <View style={styles.detailRow}>
-            <Ionicons name="location-outline" size={19} color="#666666" />
+            <Ionicons
+              name="location-outline"
+              size={19}
+              color={COLORS.muted}
+            />
 
-            <Text style={styles.detailText}>{nextClass.location}</Text>
+            <Text style={styles.detailText}>
+              {nextClass.location}
+            </Text>
           </View>
 
           <Pressable
@@ -136,7 +160,9 @@ export default function HomeScreen() {
         </View>
       )}
 
-      <Text style={styles.sectionTitle}>Upcoming assignment</Text>
+      <Text style={styles.sectionTitle}>
+        Upcoming assignment
+      </Text>
 
       {nextAssignment ? (
         <Pressable
@@ -145,21 +171,23 @@ export default function HomeScreen() {
             pressed && styles.pressed,
           ]}
           onPress={() => {
-            if (assignmentCourse) {
-              router.push({
-                pathname: '/class/[id]',
-                params: {
-                  id: assignmentCourse.id,
-                },
-              });
+            if (!assignmentCourse) {
+              return;
             }
+
+            router.push({
+              pathname: '/class/[id]',
+              params: {
+                id: assignmentCourse.id,
+              },
+            });
           }}
         >
           <View style={styles.assignmentIcon}>
             <Ionicons
               name="document-text-outline"
               size={25}
-              color="#4B2E83"
+              color={COLORS.brown}
             />
           </View>
 
@@ -177,7 +205,11 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          <Ionicons name="chevron-forward" size={22} color="#999999" />
+          <Ionicons
+            name="chevron-forward"
+            size={22}
+            color={COLORS.muted}
+          />
         </Pressable>
       ) : (
         <View style={styles.emptyCard}>
@@ -203,7 +235,11 @@ export default function HomeScreen() {
           }
         >
           <View style={styles.smallIcon}>
-            <Ionicons name="restaurant-outline" size={25} color="#4B2E83" />
+            <Ionicons
+              name="restaurant-outline"
+              size={25}
+              color={COLORS.brown}
+            />
           </View>
 
           <Text style={styles.smallCardTitle}>Meal Plan</Text>
@@ -218,10 +254,15 @@ export default function HomeScreen() {
           onPress={() => router.push('/calendar')}
         >
           <View style={styles.smallIcon}>
-            <Ionicons name="calendar-outline" size={25} color="#4B2E83" />
+            <Ionicons
+              name="calendar-outline"
+              size={25}
+              color={COLORS.brown}
+            />
           </View>
 
           <Text style={styles.smallCardTitle}>Calendar</Text>
+
           <Text style={styles.smallCardValue}>
             {upcomingAssignments.length} assignments
           </Text>
@@ -237,11 +278,17 @@ export default function HomeScreen() {
           onPress={() => router.push('/map')}
         >
           <View style={styles.smallIcon}>
-            <Ionicons name="map-outline" size={25} color="#4B2E83" />
+            <Ionicons
+              name="map-outline"
+              size={25}
+              color={COLORS.brown}
+            />
           </View>
 
           <Text style={styles.smallCardTitle}>Campus Map</Text>
-          <Text style={styles.smallCardValue}>Find a building</Text>
+          <Text style={styles.smallCardValue}>
+            Find a building
+          </Text>
         </Pressable>
 
         <Pressable
@@ -252,7 +299,11 @@ export default function HomeScreen() {
           onPress={() => router.push('/profile')}
         >
           <View style={styles.smallIcon}>
-            <Ionicons name="card-outline" size={25} color="#4B2E83" />
+            <Ionicons
+              name="card-outline"
+              size={25}
+              color={COLORS.brown}
+            />
           </View>
 
           <Text style={styles.smallCardTitle}>Student ID</Text>
@@ -263,7 +314,8 @@ export default function HomeScreen() {
       </View>
 
       <Text style={styles.demoNotice}>
-        PantherHub is an unofficial student project using demonstration data.
+        PantherHub is an unofficial student project using demonstration
+        data.
       </Text>
     </ScrollView>
   );
@@ -272,7 +324,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#F4F6F8',
+    backgroundColor: COLORS.background,
     paddingHorizontal: 20,
     paddingTop: 65,
     paddingBottom: 40,
@@ -290,7 +342,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    color: '#4B2E83',
+    color: COLORS.brown,
     fontSize: 28,
     fontWeight: '800',
   },
@@ -301,33 +353,37 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 21,
-    backgroundColor: '#4B2E83',
+    backgroundColor: COLORS.brown,
+    borderWidth: 3,
+    borderColor: COLORS.gold,
   },
 
   greeting: {
-    color: '#171717',
+    color: COLORS.text,
     fontSize: 25,
     fontWeight: '800',
   },
 
   subtitle: {
-    color: '#666666',
+    color: COLORS.muted,
     fontSize: 16,
     marginTop: 6,
   },
 
   sectionTitle: {
-    color: '#171717',
+    color: COLORS.brown,
     fontSize: 20,
     fontWeight: '800',
     marginBottom: 12,
   },
 
   largeCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.card,
     borderRadius: 18,
     padding: 20,
     marginBottom: 25,
+    borderTopWidth: 5,
+    borderTopColor: COLORS.gold,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
@@ -345,15 +401,20 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
+  cardTitleArea: {
+    flex: 1,
+    paddingRight: 12,
+  },
+
   cardLabel: {
-    color: '#4B2E83',
+    color: COLORS.brown,
     fontSize: 13,
     fontWeight: '800',
     letterSpacing: 1,
   },
 
   cardTitle: {
-    color: '#171717',
+    color: COLORS.text,
     fontSize: 21,
     fontWeight: '800',
     marginTop: 7,
@@ -365,7 +426,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 14,
-    backgroundColor: '#F1EBFA',
+    backgroundColor: COLORS.lightGold,
   },
 
   detailRow: {
@@ -376,7 +437,7 @@ const styles = StyleSheet.create({
 
   detailText: {
     flex: 1,
-    color: '#666666',
+    color: COLORS.muted,
     fontSize: 15,
     marginLeft: 9,
   },
@@ -385,7 +446,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4B2E83',
+    backgroundColor: COLORS.brown,
     borderRadius: 12,
     paddingVertical: 13,
     marginTop: 10,
@@ -406,10 +467,12 @@ const styles = StyleSheet.create({
   assignmentCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.card,
     borderRadius: 17,
     padding: 16,
     marginBottom: 25,
+    borderLeftWidth: 5,
+    borderLeftColor: COLORS.gold,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
@@ -426,7 +489,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 14,
-    backgroundColor: '#F1EBFA',
+    backgroundColor: COLORS.lightGold,
     marginRight: 13,
   },
 
@@ -435,20 +498,20 @@ const styles = StyleSheet.create({
   },
 
   assignmentTitle: {
-    color: '#252525',
+    color: COLORS.text,
     fontSize: 16,
     fontWeight: '800',
   },
 
   assignmentCourse: {
-    color: '#4B2E83',
+    color: COLORS.brown,
     fontSize: 13,
     fontWeight: '700',
     marginTop: 4,
   },
 
   assignmentDue: {
-    color: '#777777',
+    color: COLORS.muted,
     fontSize: 13,
     marginTop: 3,
   },
@@ -462,10 +525,12 @@ const styles = StyleSheet.create({
   smallCard: {
     flex: 1,
     minHeight: 145,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.card,
     borderRadius: 18,
     padding: 17,
     justifyContent: 'center',
+    borderTopWidth: 4,
+    borderTopColor: COLORS.gold,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
@@ -482,31 +547,31 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 13,
-    backgroundColor: '#F1EBFA',
+    backgroundColor: COLORS.lightGold,
     marginBottom: 12,
   },
 
   smallCardTitle: {
-    color: '#252525',
+    color: COLORS.text,
     fontSize: 16,
     fontWeight: '800',
   },
 
   smallCardValue: {
-    color: '#666666',
+    color: COLORS.muted,
     fontSize: 13,
     marginTop: 5,
   },
 
   emptyCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.card,
     borderRadius: 16,
     padding: 18,
     marginBottom: 25,
   },
 
   emptyText: {
-    color: '#777777',
+    color: COLORS.muted,
     fontSize: 15,
   },
 
@@ -516,7 +581,7 @@ const styles = StyleSheet.create({
   },
 
   demoNotice: {
-    color: '#777777',
+    color: COLORS.muted,
     fontSize: 12,
     lineHeight: 18,
     textAlign: 'center',
