@@ -1,35 +1,13 @@
 import { router } from 'expo-router';
 import {
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
-const classes = [
-  {
-    id: 'csc270',
-    code: 'CSC 270',
-    name: 'Computer Science',
-    time: 'Monday and Wednesday • 2:00 PM',
-    location: 'Science Building, Room 204',
-  },
-  {
-    id: 'cyb210',
-    code: 'CYB 210',
-    name: 'Introduction to Cybersecurity',
-    time: 'Tuesday and Thursday • 11:00 AM',
-    location: 'Nexus Building, Room 126',
-  },
-  {
-    id: 'mat141',
-    code: 'MAT 141',
-    name: 'Calculus I',
-    time: 'Monday and Wednesday • 9:00 AM',
-    location: 'Alumnae Hall, Room 114',
-  },
-];
+import { courses } from '../../data/pantherHubData';
 
 export default function ClassesScreen() {
   return (
@@ -37,7 +15,7 @@ export default function ClassesScreen() {
       <Text style={styles.title}>My Classes</Text>
       <Text style={styles.subtitle}>Fall semester</Text>
 
-      {classes.map((course) => (
+      {courses.map((course) => (
         <Pressable
           key={course.id}
           style={({ pressed }) => [
@@ -57,7 +35,11 @@ export default function ClassesScreen() {
           </View>
 
           <Text style={styles.courseName}>{course.name}</Text>
-          <Text style={styles.details}>{course.time}</Text>
+
+          <Text style={styles.details}>
+            {course.days} • {course.startTime}
+          </Text>
+
           <Text style={styles.details}>{course.location}</Text>
         </Pressable>
       ))}
@@ -116,7 +98,6 @@ const styles = StyleSheet.create({
   arrow: {
     color: '#4B2E83',
     fontSize: 32,
-    fontWeight: '300',
   },
   courseName: {
     color: '#171717',
